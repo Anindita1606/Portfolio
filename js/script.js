@@ -67,14 +67,22 @@ const nav = document.querySelector(".nav"),
             }
         }
     }
-    document.querySelector(".btnHireMe").addEventListener("click", function() {
-        const sectionIndex = this.getAttribute("data-section-index");
-        console.log(sectionIndex);
-        showSection(this);
+  document.querySelector(".btnHireMe#btnHireMeScroll").addEventListener("click", function(e) {
+    e.preventDefault(); // prevent default link jump
+    const section = document.querySelector("#contact");
+    if (section) {
+        // remove all active sections
+        document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
+        // activate contact section
+        section.classList.add("active");
+
+        // update nav bar
         updateNav(this);
         removeBackSection();
-        addBackSection(sectionIndex);
-    })
+        addBackSection(4); // contact section is 5th in order (index 4)
+    }
+});
+
     const navTogglerBtn = document.querySelector(".nav-toggler"),
     aside = document.querySelector(".aside");
     navTogglerBtn.addEventListener("click", () =>
@@ -90,3 +98,14 @@ const nav = document.querySelector(".nav"),
             allSection[i].classList.toggle("open");
         }
     }
+
+// ✅ Smooth scroll for "Hire Me" button in About section
+document.addEventListener("DOMContentLoaded", function () {
+    const scrollBtn = document.getElementById("btnHireMeScroll");
+    const contactSection = document.getElementById("contact");
+
+    scrollBtn?.addEventListener("click", function (e) {
+        e.preventDefault();
+        contactSection?.scrollIntoView({ behavior: "smooth" });
+    });
+});
